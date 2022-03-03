@@ -18,11 +18,12 @@ export const validate = data => {
 
     if(!data.password) {
         errors.password = 'Password is required'
-    } else if(data.password.lenght < 6 ) {
+    } else if(data.password.length < 6 ) {
         errors.password = 'Password need to be 6 character or more'
     } else {
         delete errors.password
     }
+
 
     if(!data.confirmPassword) {
         errors.confirmPassword = 'Confirm the password'
