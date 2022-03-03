@@ -1,6 +1,7 @@
 import React , {useState , useEffect} from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Link} from 'react-router-dom';
 
 import { validate } from './validate';
 import { notify } from './toast';
@@ -8,26 +9,19 @@ import styles from './SignUp.module.css'
 
 const Login = () => {
     const [data , setData] = useState({
-        name:"",
         email: "",
         password: "",
-        confirmPassword: "",
-        isAccepted:false,
     });
 
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
 
     useEffect(() => {
-        setErrors(validate(data));
+        setErrors(validate(data , 'login'));
     }, [data , touched])
 
     const changeHandler = event => {
-        if(event.target.name === 'isAccepted'){
-            setData({...data, [event.target.name]: event.target.checked})
-        } else {
             setData({...data, [event.target.name]: event.target.value})
-        }
     }
 
     const focusHandler = event => {
@@ -37,14 +31,11 @@ const Login = () => {
     const submitHandler = event => {
         event.preventDefault();
         if(!Object.keys(errors).length) {
-            notify('you signed up successfully' , 'suceess'); // use notification
+            notify('you loged successfully' , 'suceess'); // use notification
         } else {
             setTouched({
-                name: true,
                 email: true,
                 password: true,
-                confirmPassword: true,
-                isAccepted: true
             })
 
             notify('invalid data!', 'error');
@@ -77,7 +68,7 @@ const Login = () => {
                         {errors.password && touched.password && <span>{errors.password}</span>}
                     </div>
                     <div className={styles.formButtons}>
-                        <a href="#">Sign up</a>
+                        <Link to="/signup">Sign up</Link>
                         <button type='submit'>Login</button>
                     </div>
                     <ToastContainer />
